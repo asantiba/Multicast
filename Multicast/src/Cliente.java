@@ -8,7 +8,7 @@ public class Cliente {
 	JTextArea area = null;
 	JPanel container_area = null;
 	JScrollPane scroll = null;
-	// Variables socket
+	// Variables socket uni
 	Socket socket = null;
 	BufferedReader reader = null; //Permite leer mensajes
 	PrintWriter writer = null; //Permite enviar mensajes
