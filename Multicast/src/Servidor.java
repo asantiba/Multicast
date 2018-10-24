@@ -1,7 +1,4 @@
-import javax.swing.*;
-import java.awt.*;
 import java.net.*; // Socket
-//import java.awt.event.*; // Manejo de eventos
 
 //Funcion Main, inicializa el Servidor.
 public class Servidor{
@@ -40,20 +37,5 @@ public class Servidor{
 		}catch(Exception e) {e.printStackTrace();}
 	}
 }
-
-//Thread del Servidor del historial, llama al SocketHandler para realizar cualquier operacion en un socket
-//y DataHandler para obtener cualquier dato. Cuando se socilita historial, se llama a DataThread (ESTO NO ESTA IMPLEMENTADO AUN)
-//Para poder enviar el historial y seguir podiendo recibir otros sockets.
-
-
-
-
-
-	
-
-
-
-
-
 
 
