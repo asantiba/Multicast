@@ -8,6 +8,7 @@ public class Cliente {
 	JTextArea area = null;
 	JPanel container_area = null;
 	JScrollPane scroll = null;
+	String input = null;
 
 	// Variables Multicast
 	private InetAddress group; // Grupo para unirse al multicast
@@ -33,6 +34,7 @@ public class Cliente {
 		window = new JFrame("Cliente");
 		area = new JTextArea(20, 4);
 		scroll = new JScrollPane(area);
+		input = JOptionPane.showInputDialog("Ingrese IP Mediciones Historial");
 		container_area = new JPanel();
 		container_area.setLayout(new GridLayout(1, 1));
 		container_area.add(scroll);
@@ -43,7 +45,10 @@ public class Cliente {
 		window.setResizable(false);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		if(previous_measurements == "1") {
+		//Input [ip_multicast, mediciones, historial]
+		area.append(input);
+		String parsed_input[] = input.split(" ");
+		if(parsed_input[2].equals("1")) {
 			try {
 				socket = new Socket(server_id, 9000);
 				write();
@@ -118,6 +123,7 @@ public class Cliente {
 	}
 
 	public static void main(String[] args) {
+		
 		new Cliente();
 	}
 
