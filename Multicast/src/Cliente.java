@@ -20,7 +20,7 @@ public class Cliente {
 	PrintWriter writer = null; // Permite enviar mensajes
 	
 	//Paramentros de cliente
-	String server_id = "localhost";
+	String server_id = "192.168.1.5";
 	String variables = "111"; //Variables solicitadas, luego comparar con estas para saber cuales mostrar
 	String previous_measurements = "1"; //Historial solicitado
 	Boolean finished_history = false; //Indica si finalizo el envio del historial

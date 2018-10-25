@@ -152,7 +152,7 @@ public class Servidor {
 							area.append("\n");
 						}
 					};
-					timer.schedule(task, 0, 10000);
+					timer.schedule(task, 0, 10*1000); //Segundos entre cada ciclo
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
