@@ -61,7 +61,6 @@ class SocketHandler extends Thread{
 		this.s = s;
 	}
 	
-	//Lee el buffer del socket s, luego retorna una lista de string
 	public void run(){
 		try { //Se intenta obtener la informacion del socket.
 			BufferedReader reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -74,8 +73,7 @@ class SocketHandler extends Thread{
 			}
 		} catch(Exception ex) {ex.printStackTrace();}
 	}
-
-	//Escribe en el output, envia valores en una lista de string al socket.
+	
 	public void write() {
 		try {
 			for(int i = 0; i < datas[0].elements.size(); i++) {
