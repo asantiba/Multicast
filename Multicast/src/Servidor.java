@@ -2,12 +2,14 @@ import java.net.*; // Socket
 
 //Funcion Main, inicializa el Servidor.
 public class Servidor{
-	//Para escribir en pantalla viewport.screenwrite("string")
+	//Intanciar interfaz
 	public static Interface viewport;
-	public static DataHandler data1,data2,data3;
+	
+	public static DataHandler data1, data2, data3;
 	
 	public static void main(String[] args){
-		viewport = new Interface();
+		//Iniciar interfaz con el nombre de la ventana
+		viewport = new Interface("Servidor Multicast");
 		data1 = new DataHandler("Acidez");
 		data2 = new DataHandler("Temperatura");
 		data3 = new DataHandler("Humedad");
@@ -15,9 +17,8 @@ public class Servidor{
 		
 		viewport.screenwrite("> Inicializando servidor\n");
 		
-		
-		InetAddress target_ip;
-		MulticastSocket multi_socket;
+		InetAddress target_ip = null;
+		MulticastSocket multi_socket = null;
 		
 		try {
 			target_ip = InetAddress.getByName("230.0.0.4");
@@ -33,9 +34,7 @@ public class Servidor{
 			multi_server_3.start();
 			server_t.start();
 			
-			viewport.screenwrite("> Server ON\n");	
+			viewport.screenwrite("> Server ON\n\n");	
 		}catch(Exception e) {e.printStackTrace();}
 	}
 }
-
-

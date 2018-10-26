@@ -12,8 +12,8 @@ class Interface{
 	JScrollPane scroll;
 	JPanel container_area;
 	
-	public Interface() {
-		window = new JFrame("Servidor2"); // Ventana con nombre Servidor
+	public Interface(String name) {
+		window = new JFrame(name); // Ventana con nombre Servidor
 		area = new JTextArea(20, 40); // Area para insertar texto
 		scroll = new JScrollPane(area); // Barra para desplazar hacia abajo
 		container_area = new JPanel();
