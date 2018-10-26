@@ -1,6 +1,10 @@
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import javax.swing.*;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 class Interface{
 	JFrame window;
@@ -8,15 +12,14 @@ class Interface{
 	JScrollPane scroll;
 	JPanel container_area;
 	
-	public Interface(String name) {
-		window = new JFrame(name); // Ventana con nombre Servidor
+	public Interface() {
+		window = new JFrame("Servidor2"); // Ventana con nombre Servidor
 		area = new JTextArea(20, 40); // Area para insertar texto
 		scroll = new JScrollPane(area); // Barra para desplazar hacia abajo
 		container_area = new JPanel();
 		config();
 	}
 	
-	//Configuración de la interfaz
 	public void config() {	
 		container_area.setLayout(new GridLayout(1, 1));
 		container_area.add(scroll);
@@ -28,7 +31,6 @@ class Interface{
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	//Para escribir en pantalla viewport.screenwrite("string")
 	public void screenwrite(String string) {
 		area.append(string);
 	}
