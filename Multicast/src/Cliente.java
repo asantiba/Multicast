@@ -17,6 +17,7 @@ public class Cliente {
 
 	public static void main(String[] args) {
 		new Cliente("localhost", "111", "1");
+		//oe apura
 	}
 
 }
