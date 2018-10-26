@@ -37,14 +37,12 @@ class MultisocketServer extends Thread{
 					try {
 					data.compute(); //Se crean los datos.
 		            multi_socket.send(write(data.lastvalue)); //Se crea un paquete con los ultimos datos.
-		            String line = "> Variacion de " + data.indicator + ": " + data.lastvalue + "\n";
-		            viewport.screenwrite(line);
 					}catch(Exception ex) {ex.printStackTrace();}	
 				} 
 		     };  
 		     Timer timer = new Timer(); 
 		     //Inicia la tarea, desde 0seg, cada 3seg
-		     timer.scheduleAtFixedRate(timerTask, 0, 8000);
+		     timer.scheduleAtFixedRate(timerTask, 0, 1000);
 		} catch(Exception ex) {ex.printStackTrace();}
 	}	
 }
