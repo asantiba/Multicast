@@ -23,7 +23,7 @@ class SocketServer extends Thread{
 		this.datas = datas;
 		try {
 			server = new ServerSocket(port);
-			viewport.screenwrite("> Socket historial en Puerto: "+this.port+"\n");	
+			viewport.screenwrite("> Socket historial en Puerto: "+this.port+"\n");
 		} catch(Exception ex) {ex.printStackTrace();}
 		
 	}
@@ -34,18 +34,11 @@ class SocketServer extends Thread{
 				//Supondremos, que desde el cliente nunca se solicitara este socket si "Historial != 1"
 				Socket s = server.accept();
 				socket_list.add(s);
-				viewport.screenwrite("> Conexion nueva solicita historial\n");
+				viewport.screenwrite("> Conexion nueva solicita historial\n\n");
 				if(!handler.isAlive()) {
-					String[] read = handler.read(socket_list.get(0));
-					String[] asked = read[1].split("");		//Mediciones pedidas
 					PrintWriter writer = new PrintWriter(socket_list.get(0).getOutputStream(), true);
 					handler = new SocketHandler(datas, writer);
-					for(int i = 0; i < asked.length; i++) {
-						if(asked[i].equals("1")) {
-							writer.println("> Iniciando el Historial de:"+datas[i].indicator+"\n");
-							handler.start();
-						}
-					}
+					handler.start();
 				}
 			}
 		}catch(Exception ex) {ex.printStackTrace();}
@@ -56,6 +49,7 @@ class SocketServer extends Thread{
 class SocketHandler extends Thread{
 	DataHandler[] datas;
 	PrintWriter writer;
+	String variables; //variables solicitadas
 	
 	public SocketHandler(DataHandler[] datas, PrintWriter writer){
 		this.datas = datas;
@@ -63,23 +57,31 @@ class SocketHandler extends Thread{
 	}
 	
 	//Lee el buffer del socket s, luego retorna una lista de string
-	public String[] read(Socket s){
-		String[] msg_splitted = null;
+	public void run(Socket s){
 		try { //Se intenta obtener la informacion del socket.
 			BufferedReader reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
-			String msg_received = reader.readLine();
-			msg_splitted = msg_received.split(" ");				
+			while (true) {
+				variables = reader.readLine();
+				if(variables.length() > 1) {
+					write();
+					variables = "";
+				}
+			}
 		} catch(Exception ex) {ex.printStackTrace();}
-		return msg_splitted;
 	}
 
 	//Escribe en el output, envia valores en una lista de string al socket.
-	public void run(PrintWriter writer, DataHandler values) {
+	public void write() {
 		try {
-			for(int i = 0; i < values.elements.size(); i++) {
-				writer.println("Variación de "+values.indicator+": " + values.elements.get(i)+"\n");
+			for(int i = 0; i < datas[0].elements.size(); i++) {
+				char[] characters = variables.toCharArray();
+				for(int j = 0; j < characters.length; j++) {
+					if(characters[j] == '1') {
+						writer.println("> Variación de "+datas[j].indicator+": " + datas[j].elements.get(i));
+					}
+				}
 			}
-			writer.println("Historial de "+values.indicator+" finalizado\n");
+			writer.println("Finished history");
 		}catch(Exception ex) {ex.printStackTrace();}
 	}
 	
