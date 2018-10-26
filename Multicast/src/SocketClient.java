@@ -41,6 +41,7 @@ public class SocketClient extends Thread{
 			socket = new Socket(server_id, 9000);
 			write();
 			read();
+			socket.close();
 		}catch(Exception ex) {ex.printStackTrace();}
 	}
 

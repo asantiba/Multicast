@@ -21,6 +21,7 @@ class SocketServer extends Thread{
 	public SocketServer(Interface viewport, DataHandler[] datas){
 		this.viewport = viewport; 
 		this.datas = datas;
+		this.socket_list = new ArrayList<Socket>();
 		try {
 			server = new ServerSocket(port);
 			viewport.screenwrite("> Socket historial en Puerto: "+this.port+"\n");
@@ -34,11 +35,13 @@ class SocketServer extends Thread{
 				//Supondremos, que desde el cliente nunca se solicitara este socket si "Historial != 1"
 				Socket s = server.accept();
 				socket_list.add(s);
-				viewport.screenwrite("> Conexion nueva solicita historial\n\n");
-				if(!handler.isAlive()) {
+				viewport.screenwrite("\n> Conexion nueva solicita historial\n");
+				if((handler == null) || !handler.isAlive() ) {
 					PrintWriter writer = new PrintWriter(socket_list.get(0).getOutputStream(), true);
-					handler = new SocketHandler(datas, writer);
+					handler = new SocketHandler(datas, writer, socket_list.get(0));
+					viewport.screenwrite("> Mandando Historial\n\n");
 					handler.start();
+					socket_list.remove(0);
 				}
 			}
 		}catch(Exception ex) {ex.printStackTrace();}
@@ -50,14 +53,16 @@ class SocketHandler extends Thread{
 	DataHandler[] datas;
 	PrintWriter writer;
 	String variables; //variables solicitadas
+	Socket s;
 	
-	public SocketHandler(DataHandler[] datas, PrintWriter writer){
+	public SocketHandler(DataHandler[] datas, PrintWriter writer, Socket s){
 		this.datas = datas;
 		this.writer = writer;
+		this.s = s;
 	}
 	
 	//Lee el buffer del socket s, luego retorna una lista de string
-	public void run(Socket s){
+	public void run(){
 		try { //Se intenta obtener la informacion del socket.
 			BufferedReader reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
 			while (true) {

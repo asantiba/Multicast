@@ -44,7 +44,7 @@ class MultisocketServer extends Thread{
 		     };  
 		     Timer timer = new Timer(); 
 		     //Inicia la tarea, desde 0seg, cada 3seg
-		     timer.scheduleAtFixedRate(timerTask, 0, 8000);
+		     timer.scheduleAtFixedRate(timerTask, 0, 2000);
 		} catch(Exception ex) {ex.printStackTrace();}
 	}	
 }
