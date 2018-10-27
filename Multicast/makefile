@@ -6,13 +6,13 @@ RM =
         $(JC) $(JFLAGS) $*.java
 
 CLASSES = \
-        Servidor.java \
-        Cliente.java \
-        ClientMulticast.java \
-        SocketClient.java \
-        DataHandler.java \
-        Interface.java \
-        MultisocketServer.java \
+        Servidor.java\
+        Cliente.java\
+        ClientMulticast.java\
+        SocketClient.java\
+        DataHandler.java\
+        Interface.java\
+        MultisocketServer.java\
         SocketServer.java
 
 default: classes
