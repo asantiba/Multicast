@@ -15,10 +15,12 @@ public class Cliente {
 			try {
 				SocketClient client = new SocketClient(server_id, variables);
 				client.start();
-				ClientMulticast client_multicast = new ClientMulticast(variables, client.finished);
-				client_multicast.start();
 			} catch(Exception ex) {ex.printStackTrace();}
 		}
+		try {
+			ClientMulticast client_multicast = new ClientMulticast(variables, client.finished);
+			client_multicast.start();
+		} catch(Exception ex) {ex.printStackTrace();}
 	}
 
 	public static void main(String[] args) {
