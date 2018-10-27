@@ -1,0 +1,20 @@
+Integrantes:
+	Alonso Rodriguez	201473018-7
+	Alexis Santibánez	201473116-7
+
+Variables usadas en el servidor: Acidez, Temperatura, Humedad.
+
+Intervalo de tiempo entre mediciones: 8 seg.
+
+Puertos usados:
+	Para envio de historial, TCP: 9000
+	Para variables,	UDP: 10033, 10033, 10033
+
+El servidor se inicializa como:
+	user@user:~ java server 
+	
+El cliente se inicializa como:
+	user@user:~ java client ip_servidor BinarioMediciones BinarioMedidasAnteriores
+	Donde BinarioMediciones es un binario de 3 digitos, BinarioMedidasAnteriores es un binario de un digito donde 1 corresponde a ver historial
+	Ejemplo, en caso de ejecutar en el mismo computador:
+	user@user:~ java client localhost 101 1
