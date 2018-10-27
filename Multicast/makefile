@@ -1,23 +1,22 @@
 JFLAGS = -g
 JC = javac
-RM = 
 .SUFFIXES: .java .class
 .java.class:
-        $(JC) $(JFLAGS) $*.java
+	$(JC) $(JFLAGS) $*.java
 
 CLASSES = \
-        Servidor.java\
-        Cliente.java\
-        ClientMulticast.java\
-        SocketClient.java\
-        DataHandler.java\
-        Interface.java\
-        MultisocketServer.java\
-        SocketServer.java
+	Cliente.java\
+	ClientMulticast.java\
+	DataHandler.java\
+	Interface.java\
+	MultisocketServer.java\
+	Servidor.java\
+	SocketClient.java\
+	SocketServer.java
 
-default: classes
+default: server
 
-classes: $(CLASSES:.java=.class)
+server: $(CLASSES:.java=.class)
 
 clean:
-        $(RM) *.class
+	$(RM) *.class

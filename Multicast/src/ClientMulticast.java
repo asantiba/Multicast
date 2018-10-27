@@ -2,7 +2,7 @@ import java.net.*;
 
 public class ClientMulticast extends Thread{
 	//Instancia interface
-	Interface viewport;
+	//Interface viewport;
 	String variables;
 	//Si finaliza en envio de historial comienza a recibir del multicast
 	Boolean finished;
@@ -15,8 +15,8 @@ public class ClientMulticast extends Thread{
 	DatagramPacket packet;
 	protected byte[] receiver_buf = new byte[256]; // Recibe los datos enviados por Multicast
 
-	public ClientMulticast(Interface viewport, String variables, Boolean finished) {
-		this.viewport = viewport;
+	public ClientMulticast(String variables, Boolean finished) {
+		//this.viewport = viewport;
 		this.variables = variables;
 		this.finished = finished;
 	}
@@ -30,17 +30,20 @@ public class ClientMulticast extends Thread{
 					if(multicast_socket1 != null) {
 						multicast_socket1.receive(packet);
 						String received = new String(packet.getData(), 0, packet.getLength());
-						viewport.screenwrite("> Variación de Acidez: " + received + "\n");
+						//viewport.screenwrite("> Variacion de Acidez: " + received + "\n");
+						System.out.println("> Variacion de Acidez: " + received);
 					}
 					if(multicast_socket2 != null) {
 						multicast_socket2.receive(packet);
 						String received = new String(packet.getData(), 0, packet.getLength());
-						viewport.screenwrite("> Variación de Temperatura: " + received + "\n");
+						//viewport.screenwrite("> Variacion de Temperatura: " + received + "\n");
+						System.out.println("> Variacion de Temperatura: " + received);
 					}
 					if(multicast_socket3 != null) {
 						multicast_socket3.receive(packet);
 						String received = new String(packet.getData(), 0, packet.getLength());
-						viewport.screenwrite("> Variación de Humedad: " + received + "\n");
+						//viewport.screenwrite("> Variacion de Humedad: " + received + "\n");
+						System.out.println("> Variacion de Humedad: " + received);
 					}
 				}
 			}

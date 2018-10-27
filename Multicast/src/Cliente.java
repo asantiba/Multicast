@@ -1,20 +1,21 @@
 
 public class Cliente {
 	//Instanciar interface
-	public static Interface viewport;
+	//public static Interface viewport;
 	//Instanciar socket cliente
 	SocketClient client;
 	ClientMulticast client_multicast;
 
 	public Cliente(String server_id, String variables, String previous_measurements) {
-		viewport = new Interface("Cliente");
-		viewport.screenwrite("> Inicializando cliente\n");
+		//viewport = new Interface("Cliente");
+		//viewport.screenwrite("> Inicializando cliente\n");
+		System.out.println("> Inicializando cliente");
 
 		if(previous_measurements == "1") {
 			try {
-				SocketClient client = new SocketClient(viewport, server_id, variables);
+				SocketClient client = new SocketClient(server_id, variables);
 				client.start();
-				ClientMulticast client_multicast = new ClientMulticast(viewport, variables, client.finished);
+				ClientMulticast client_multicast = new ClientMulticast(variables, client.finished);
 				client_multicast.start();
 			} catch(Exception ex) {ex.printStackTrace();}
 		}

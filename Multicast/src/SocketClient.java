@@ -5,7 +5,7 @@ import java.net.Socket;
 
 public class SocketClient extends Thread{
 	// Instanciar interface
-	Interface viewport;
+	//Interface viewport;
 
 	// Variables cliente-servidor
 	Socket socket;
@@ -17,14 +17,15 @@ public class SocketClient extends Thread{
 	String variables; //Variables solicitadas
 	Boolean finished = true;
 
-	public SocketClient(Interface viewport, String server_id, String variables) {
-		this.viewport = viewport;
+	public SocketClient(String server_id, String variables) {
+		//this.viewport = viewport;
 		this.server_id = server_id;
 		this.variables = variables;
 	}
 
 	public void run() {
-		viewport.screenwrite("> Variables: " + variables + "\n");
+		//viewport.screenwrite("> Variables: " + variables + "\n");
+		System.out.println("> Variables: " + variables);
 		char[] characters = variables.toCharArray();
 		String text = "";
 		if(characters[0] == '1') {
@@ -36,7 +37,8 @@ public class SocketClient extends Thread{
 		if(characters[2] == '1') {
 			text = text + "Humedad";
 		}
-		viewport.screenwrite("> Solicitar historial de: " + text + "\n");
+		//viewport.screenwrite("> Solicitar historial de: " + text + "\n");
+		System.out.println("> Solicitar historial de: " + text);
 		try {
 			socket = new Socket(server_id, 9000);
 			write();
@@ -64,7 +66,8 @@ public class SocketClient extends Thread{
 					finished = false;
 				}
 				else {
-					viewport.screenwrite(msg_received + "\n");
+					//viewport.screenwrite(msg_received + "\n");
+					System.out.println(msg_received);
 				}
 			}
 		} catch (Exception ex) { ex.printStackTrace();}

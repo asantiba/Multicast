@@ -9,16 +9,17 @@ class MultisocketServer extends Thread{
 	InetAddress target_ip;			//Ip a los que se envian los MultiCast
 	int target_port;				//Puerto por donde se mandaran los mensajes.
 	MulticastSocket multi_socket;	//El Multicast Socket
-	Interface viewport;				//De aqui se imprime en pantalla viewport.screenwrite("str")
+	//Interface viewport;				//De aqui se imprime en pantalla viewport.screenwrite("str")
 	DataHandler data;				//De aqui se obtienen los datos.
 	
-	public MultisocketServer(MulticastSocket multi_socket,InetAddress target_ip, int target_port, DataHandler data, Interface viewport) {
-		this.viewport = viewport;
+	public MultisocketServer(MulticastSocket multi_socket,InetAddress target_ip, int target_port, DataHandler data) {
+		//this.viewport = viewport;
 		this.multi_socket = multi_socket;
 		this.target_ip = target_ip;
 		this.target_port = target_port;
 		this.data = data;
-		viewport.screenwrite("> Multicast IP mandando "+data.indicator+" a: "+this.target_ip+":"+this.target_port+"\n");
+		//viewport.screenwrite("> Multicast IP mandando "+data.indicator+" a: "+this.target_ip+":"+this.target_port+"\n");
+		System.out.println("> Multicast IP mandando "+data.indicator+" a: "+this.target_ip+":"+this.target_port);
 
 	}
 	
@@ -37,8 +38,9 @@ class MultisocketServer extends Thread{
 					try {
 					data.compute(); //Se crean los datos.
 		            multi_socket.send(write(data.lastvalue)); //Se crea un paquete con los ultimos datos.
-		            String line = "> Variacion de " + data.indicator + ": " + data.lastvalue + "\n";
-		            viewport.screenwrite(line);
+		            String line = "> Variacion de " + data.indicator + ": " + data.lastvalue;
+		            //viewport.screenwrite(line);
+		            System.out.println(line);
 					}catch(Exception ex) {ex.printStackTrace();}	
 				} 
 		     };  

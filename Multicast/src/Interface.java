@@ -27,7 +27,7 @@ class Interface{
 		window.add(container_area, BorderLayout.NORTH);
 		window.setSize(500, 350);
 		window.setVisible(true);
-		window.setResizable(false); // Bloquea el cambio de tamaño
+		window.setResizable(false); // Bloquea el cambio de tamano
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	

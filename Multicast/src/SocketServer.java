@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 class SocketServer extends Thread{
-	Interface viewport;
+	// Interface viewport;
 	ServerSocket server;
 	int port = 9000;
 	
@@ -18,13 +18,14 @@ class SocketServer extends Thread{
 	DataHandler[] datas;
 	
 	//Init
-	public SocketServer(Interface viewport, DataHandler[] datas){
-		this.viewport = viewport; 
+	public SocketServer(DataHandler[] datas){
+		// this.viewport = viewport; 
 		this.datas = datas;
 		this.handler_list = new ArrayList<SocketHandler>();
 		try {
 			server = new ServerSocket(port);
-			viewport.screenwrite("> Socket historial en Puerto: "+this.port+"\n");
+			// viewport.screenwrite("> Socket historial en Puerto: "+this.port+"\n");
+			System.out.println("> Socket historial en Puerto: "+this.port);
 		} catch(Exception ex) {ex.printStackTrace();}
 		
 	}
@@ -35,7 +36,8 @@ class SocketServer extends Thread{
 				//Supondremos, que desde el cliente nunca se solicitara este socket si "Historial != 1"	
 				if (handler_list.isEmpty() || handler_list.get(0).isAlive()) {
 					Socket s = server.accept();
-					viewport.screenwrite("\n> Conexion nueva solicita historial\n");
+					// viewport.screenwrite("\n> Conexion nueva solicita historial\n");
+					System.out.println("\n> Conexion nueva solicita historial\n");
 					handler_list.add(new SocketHandler(datas, s));
 					if(handler_list.get(0).getState() == Thread.State.NEW) {
 						handler_list.get(0).start();
@@ -87,7 +89,7 @@ class SocketHandler extends Thread{
 				char[] characters = variables.toCharArray();
 				for(int j = 0; j < characters.length; j++) {
 					if(characters[j] == '1') {
-						writer.println("> Variación de "+datas[j].indicator+": " + datas[j].elements.get(i));
+						writer.println("> Variacion de "+datas[j].indicator+": " + datas[j].elements.get(i));
 					}
 				}
 			}
