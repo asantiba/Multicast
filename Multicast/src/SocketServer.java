@@ -8,7 +8,7 @@ import java.util.ArrayList;
 class SocketServer extends Thread{
 	// Interface viewport;
 	ServerSocket server;
-	int port = 9000;
+	int port = 9110;
 	
 	//Lista de sockets esperando.
 	ArrayList<SocketHandler> handler_list;

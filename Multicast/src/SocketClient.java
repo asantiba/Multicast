@@ -40,7 +40,7 @@ public class SocketClient extends Thread{
 		//viewport.screenwrite("> Solicitar historial de: " + text + "\n");
 		System.out.println("> Solicitar historial de: " + text);
 		try {
-			socket = new Socket(server_id, 9000);
+			socket = new Socket(server_id, 9110);
 			write();
 			read();
 		}catch(Exception ex) {ex.printStackTrace();}

@@ -7,7 +7,7 @@ Variables usadas en el servidor: Acidez, Temperatura, Humedad.
 Intervalo de tiempo entre mediciones: 8 seg.
 
 Puertos usados:
-	Para envio de historial, TCP: 9000
+	Para envio de historial, TCP: 9110
 	Para variables,	UDP: 10033, 10033, 10033
 
 El servidor se inicializa como:
