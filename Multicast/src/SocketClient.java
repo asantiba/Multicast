@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 public class SocketClient extends Thread{
@@ -16,6 +15,7 @@ public class SocketClient extends Thread{
 	//Paramentros de cliente
 	String server_id;
 	String variables; //Variables solicitadas
+	Boolean finished = true;
 
 	public SocketClient(Interface viewport, String server_id, String variables) {
 		this.viewport = viewport;
@@ -41,7 +41,6 @@ public class SocketClient extends Thread{
 			socket = new Socket(server_id, 9000);
 			write();
 			read();
-			socket.close();
 		}catch(Exception ex) {ex.printStackTrace();}
 	}
 
@@ -55,14 +54,14 @@ public class SocketClient extends Thread{
 	public void read() {
 		try{
 			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			while (true) {
+			while (finished) {
 				String msg_received = reader.readLine();
 				if(msg_received == "Finished history") {
 					//Cierro las conexiones para permitir a otro cliente solicitar historial
 					reader.close();
 					writer.close();
 					socket.close();
-					break;
+					finished = false;
 				}
 				else {
 					viewport.screenwrite(msg_received + "\n");

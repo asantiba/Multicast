@@ -1,23 +1,28 @@
-import java.net.*; // Socket
 
 public class Cliente {
-	
+	//Instanciar interface
 	public static Interface viewport;
+	//Instanciar socket cliente
 	SocketClient client;
+	ClientMulticast client_multicast;
 
 	public Cliente(String server_id, String variables, String previous_measurements) {
 		viewport = new Interface("Cliente");
 		viewport.screenwrite("> Inicializando cliente\n");
 
 		if(previous_measurements == "1") {
-			SocketClient client = new SocketClient(viewport, server_id, variables);
-			client.start();
+			try {
+				SocketClient client = new SocketClient(viewport, server_id, variables);
+				client.start();
+				ClientMulticast client_multicast = new ClientMulticast(viewport, variables, client.finished);
+				client_multicast.start();
+			} catch(Exception ex) {ex.printStackTrace();}
 		}
 	}
 
 	public static void main(String[] args) {
 		new Cliente("localhost", "101", "1");
-		//oe apura
+		
 	}
 
 }
