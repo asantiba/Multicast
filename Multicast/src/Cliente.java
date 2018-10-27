@@ -21,7 +21,7 @@ public class Cliente {
 	}
 
 	public static void main(String[] args) {
-		new Cliente("localhost", "101", "1");
+		new Cliente(args[0], args[1], args[2]);
 		
 	}
 
