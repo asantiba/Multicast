@@ -18,7 +18,7 @@ public class Cliente {
 			} catch(Exception ex) {ex.printStackTrace();}
 		}
 		try {
-			ClientMulticast client_multicast = new ClientMulticast(variables, client.finished);
+			ClientMulticast client_multicast = new ClientMulticast(variables, true);
 			client_multicast.start();
 		} catch(Exception ex) {ex.printStackTrace();}
 	}
