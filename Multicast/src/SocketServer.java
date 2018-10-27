@@ -11,7 +11,7 @@ class SocketServer extends Thread{
 	int port = 9000;
 	
 	//Lista de sockets esperando.
-	ArrayList<Socket> socket_list;
+	ArrayList<SocketHandler> handler_list;
 	//Thread encargados del envio del historial.
 	SocketHandler handler;
 	//Arreglo de DataHandlers, cada uno con medidores diferentes.
@@ -21,7 +21,7 @@ class SocketServer extends Thread{
 	public SocketServer(Interface viewport, DataHandler[] datas){
 		this.viewport = viewport; 
 		this.datas = datas;
-		this.socket_list = new ArrayList<Socket>();
+		this.handler_list = new ArrayList<SocketHandler>();
 		try {
 			server = new ServerSocket(port);
 			viewport.screenwrite("> Socket historial en Puerto: "+this.port+"\n");
@@ -32,16 +32,20 @@ class SocketServer extends Thread{
 	public void run() {
 		try {
 			while(true) {
-				//Supondremos, que desde el cliente nunca se solicitara este socket si "Historial != 1"
-				Socket s = server.accept();
-				socket_list.add(s);
-				viewport.screenwrite("\n> Conexion nueva solicita historial\n");
-				if((handler == null) || !handler.isAlive() ) {
-					PrintWriter writer = new PrintWriter(socket_list.get(0).getOutputStream(), true);
-					handler = new SocketHandler(datas, writer, socket_list.get(0));
-					viewport.screenwrite("> Mandando Historial\n\n");
-					handler.start();
-					socket_list.remove(0);
+				//Supondremos, que desde el cliente nunca se solicitara este socket si "Historial != 1"	
+				if (handler_list.isEmpty() || handler_list.get(0).isAlive()) {
+					Socket s = server.accept();
+					viewport.screenwrite("\n> Conexion nueva solicita historial\n");
+					handler_list.add(new SocketHandler(datas, s));
+					if(handler_list.get(0).getState() == Thread.State.NEW) {
+						handler_list.get(0).start();
+					}
+					else if (handler_list.get(0).getState() == Thread.State.TERMINATED){
+						handler_list.remove(0);
+						if(handler_list.size() != 0) {
+							handler_list.get(0).start();
+						}
+					}
 				}
 			}
 		}catch(Exception ex) {ex.printStackTrace();}
@@ -52,25 +56,28 @@ class SocketServer extends Thread{
 class SocketHandler extends Thread{
 	DataHandler[] datas;
 	PrintWriter writer;
+	BufferedReader reader;
 	String variables; //variables solicitadas
 	Socket s;
 	
-	public SocketHandler(DataHandler[] datas, PrintWriter writer, Socket s){
+	public SocketHandler(DataHandler[] datas, Socket s){
 		this.datas = datas;
-		this.writer = writer;
 		this.s = s;
+		try {
+			this.writer = new PrintWriter(s.getOutputStream(), true);
+			this.reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
+		} catch(Exception ex) {ex.printStackTrace();}
+		
 	}
 	
 	//Lee el buffer del socket s, luego retorna una lista de string
 	public void run(){
 		try { //Se intenta obtener la informacion del socket.
-			BufferedReader reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
-			while (true) {
 				variables = reader.readLine();
 				if(variables.length() > 1) {
 					write();
 					variables = "";
-				}
+				
 			}
 		} catch(Exception ex) {ex.printStackTrace();}
 	}
