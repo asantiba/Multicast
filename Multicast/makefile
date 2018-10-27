@@ -7,7 +7,13 @@ RM =
 
 CLASSES = \
         Servidor.java \
-        Cliente.java 
+        Cliente.java \
+        ClientMulticast.java \
+        SocketClient.java \
+        DataHandler.java \
+        Interface.java \
+        MultisocketServer.java \
+        SocketServer.java
 
 default: classes
 
